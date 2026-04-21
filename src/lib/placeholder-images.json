@@ -1,0 +1,58 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero1",
+      "description": "Minimalist aesthetic interior",
+      "imageUrl": "https://picsum.photos/seed/hero1/1200/600",
+      "imageHint": "minimalist interior"
+    },
+    {
+      "id": "hero2",
+      "description": "Elegant lifestyle banner",
+      "imageUrl": "https://picsum.photos/seed/hero2/1200/600",
+      "imageHint": "elegant lifestyle"
+    },
+    {
+      "id": "hero3",
+      "description": "Soft pink textures",
+      "imageUrl": "https://picsum.photos/seed/hero3/1200/600",
+      "imageHint": "soft textures"
+    },
+    {
+      "id": "watch",
+      "description": "Minimalist wristwatch",
+      "imageUrl": "https://picsum.photos/seed/watch1/600/600",
+      "imageHint": "minimalist watch"
+    },
+    {
+      "id": "lamp",
+      "description": "Modern desk lamp",
+      "imageUrl": "https://picsum.photos/seed/lamp2/600/600",
+      "imageHint": "modern lamp"
+    },
+    {
+      "id": "chair",
+      "description": "Scandinavian design chair",
+      "imageUrl": "https://picsum.photos/seed/chair3/600/600",
+      "imageHint": "scandinavian chair"
+    },
+    {
+      "id": "headphones",
+      "description": "Sleek wireless headphones",
+      "imageUrl": "https://picsum.photos/seed/audio4/600/600",
+      "imageHint": "wireless headphones"
+    },
+    {
+      "id": "bottle",
+      "description": "Eco-friendly water bottle",
+      "imageUrl": "https://picsum.photos/seed/bottle5/600/600",
+      "imageHint": "water bottle"
+    },
+    {
+      "id": "backpack",
+      "description": "Minimalist urban backpack",
+      "imageUrl": "https://picsum.photos/seed/bag6/600/600",
+      "imageHint": "minimalist backpack"
+    }
+  ]
+}

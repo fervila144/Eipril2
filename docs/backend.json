@@ -1,0 +1,239 @@
+
+{
+  "entities": {
+    "Product": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Product",
+      "type": "object",
+      "description": "Represents a product available in the minimalist catalog, including its name, description, price, stock and multiple images.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Product entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the product."
+        },
+        "description": {
+          "type": "string",
+          "description": "A detailed description of the product, potentially enhanced by an AI assistant."
+        },
+        "price": {
+          "type": "number",
+          "description": "The price of the product."
+        },
+        "stock": {
+          "type": "number",
+          "description": "The current stock quantity of the product."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "The URL of the primary image (main thumbnail).",
+          "format": "uri"
+        },
+        "images": {
+          "type": "array",
+          "items": { "type": "string", "format": "uri" },
+          "description": "Up to 4 images of the product."
+        },
+        "category": {
+          "type": "string",
+          "description": "The category name of the product."
+        },
+        "isHidden": {
+          "type": "boolean",
+          "description": "Whether the product is hidden from the public catalog."
+        },
+        "isOffer": {
+          "type": "boolean",
+          "description": "Whether the product is currently on offer."
+        },
+        "mpLink": {
+          "type": "string",
+          "description": "Direct Mercado Pago payment link for this specific product.",
+          "format": "uri"
+        },
+        "createdAt": {
+          "type": "number",
+          "description": "Timestamp indicating when the product was first added to the catalog."
+        },
+        "updatedAt": {
+          "type": "number",
+          "description": "Timestamp indicating when the product's information was last modified."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "price",
+        "stock",
+        "imageUrl",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Category": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Category",
+      "type": "object",
+      "description": "Represents a product category.",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "name", "createdAt"]
+    },
+    "CarouselSlide": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CarouselSlide",
+      "type": "object",
+      "description": "Banners displayed on the home page hero section.",
+      "properties": {
+        "id": { "type": "string" },
+        "imageUrl": { "type": "string", "format": "uri" },
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "order": { "type": "number" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "imageUrl", "order"]
+    },
+    "AppearanceSettings": {
+      "title": "AppearanceSettings",
+      "type": "object",
+      "properties": {
+        "primaryColor": { "type": "string", "description": "Primary color in HSL format (e.g. '340 50% 65%')" },
+        "fontFamily": { 
+          "type": "string", 
+          "enum": [
+            "Inter", 
+            "Playfair Display", 
+            "Montserrat", 
+            "Lora", 
+            "Poppins", 
+            "Raleway", 
+            "Jost", 
+            "Libre Baskerville", 
+            "Space Grotesk", 
+            "Syne", 
+            "DM Sans", 
+            "Manrope", 
+            "Bitter", 
+            "Quicksand", 
+            "Cardo", 
+            "Cormorant Garamond"
+          ] 
+        },
+        "logoText": { "type": "string" },
+        "catalogTitle": { "type": "string" },
+        "catalogSubtitle": { "type": "string" },
+        "logoUrl": { "type": "string", "format": "uri" },
+        "faviconUrl": { "type": "string", "format": "uri" },
+        "whatsappNumber": { "type": "string", "description": "WhatsApp contact number (digits only, e.g. 5491168155653)" },
+        "hideCarouselOnMobile": { "type": "boolean", "description": "Whether to hide the home carousel on mobile devices." }
+      }
+    },
+    "Admin": {
+      "title": "Admin",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "addedAt": { "type": "number" }
+      }
+    },
+    "Order": {
+      "title": "Order",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "purchaseCode": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerSurname": { "type": "string" },
+        "customerDni": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "customerZipCode": { "type": "string" },
+        "customerAddress": { "type": "string" },
+        "customerHouseNumber": { "type": "string" },
+        "totalPrice": { "type": "number" },
+        "items": { "type": "array", "items": { "type": "object" } },
+        "status": { "type": "string", "enum": ["pending", "confirmed"] },
+        "shippingLink": { "type": "string", "format": "uri" },
+        "createdAt": { "type": "number" }
+      }
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous",
+      "google"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/products/{productId}",
+        "definition": {
+          "entityName": "Product",
+          "schema": {
+            "$ref": "#/backend/entities/Product"
+          },
+          "description": "Collection containing all products available in the catalog."
+        }
+      },
+      {
+        "path": "/categories/{categoryId}",
+        "definition": {
+          "entityName": "Category",
+          "schema": {
+            "$ref": "#/backend/entities/Category"
+          },
+          "description": "Collection containing product categories."
+        }
+      },
+      {
+        "path": "/carousel/{slideId}",
+        "definition": {
+          "entityName": "CarouselSlide",
+          "schema": {
+            "$ref": "#/backend/entities/CarouselSlide"
+          },
+          "description": "Hero carousel slides for the home page."
+        }
+      },
+      {
+        "path": "/settings/{settingId}",
+        "definition": {
+          "entityName": "AppearanceSettings",
+          "schema": {
+            "$ref": "#/backend/entities/AppearanceSettings"
+          },
+          "description": "Global application settings including appearance."
+        }
+      },
+      {
+        "path": "/admins/{adminEmail}",
+        "definition": {
+          "entityName": "Admin",
+          "schema": {
+            "$ref": "#/backend/entities/Admin"
+          },
+          "description": "Collection to identify users with administrative privileges by their email."
+        }
+      },
+      {
+        "path": "/orders/{orderId}",
+        "definition": {
+          "entityName": "Order",
+          "schema": {
+            "$ref": "#/backend/entities/Order"
+          },
+          "description": "Collection containing payment requests and customer data."
+        }
+      }
+    ]
+  }
+}

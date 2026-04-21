@@ -1,0 +1,52 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == "admin@gmail.com" || 
+        exists(/databases/$(database)/documents/admins/$(request.auth.token.email))
+      );
+    }
+
+    function isSuperAdmin() {
+      return isSignedIn() && request.auth.token.email == "admin@gmail.com";
+    }
+
+    match /products/{productId} {
+      allow get, list: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /categories/{categoryId} {
+      allow get, list: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /carousel/{slideId} {
+      allow get, list: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /admins/{adminEmail} {
+      allow get: if isSignedIn() && (request.auth.token.email == adminEmail || isAdmin());
+      allow list: if isAdmin();
+      allow create, update, delete: if isSuperAdmin();
+    }
+
+    match /orders/{orderId} {
+      allow create, get, list: if true;
+      allow update, delete: if isAdmin();
+    }
+  }
+}
